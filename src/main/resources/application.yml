@@ -1,0 +1,52 @@
+###############################################
+#   CONFIGURA\u00C7\u00D5ES DO MICROSERVICO   #
+###############################################
+validator:
+  request:
+    mapping:
+      root:
+      domain: /validator
+      cpf:
+        validaNumero: /cpf/validar
+        cadastroCPF: /cpf/cadastro
+        listarCPF: /cpf/listagem
+      cnpj:
+        validaNumero: /cnpj/validar
+        cadastroCNPJ: /cnpj/cadastro
+        listarCNPJ: /cnpj/listagem
+
+
+###############################################
+#     CONFIGURA\u00C7\u00D5ES DO SPRINGBOOT   #
+###############################################
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo-validator:123@localhost:27017/validator
+
+logging:
+  level:
+    root: INFO
+    com.innovation: INFO
+    org.springframework.*: INFO
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: refresh, mappings, httptrace, metrics, heapdump, loggers, info, env, logfile, health, configprops, hystrix.stream
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: always
+  info:
+    git:
+      mode: full
+
+messages:
+  basename: messages
+  default:
+    country: BR
+    language: PT
+    encoding: UTF-8
