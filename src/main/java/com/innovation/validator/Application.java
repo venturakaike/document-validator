@@ -10,7 +10,6 @@ public class Application {
     public static void main(String[] args) {
         new SpringApplicationBuilder(Application.class,
                 ModuleConfiguration.class,
-                EurekaClientConfiguration.class,
                 MongoConfiguration.class,
                 JacksonConfiguration.class,
                 SwaggerConfiguration.class

@@ -8,6 +8,7 @@ import com.innovation.validator.core.util.converter.StringToCNPJConverter;
 import com.innovation.validator.core.util.helper.MessageHelper;
 import com.innovation.validator.core.util.validator.CNPJValidator;
 import com.innovation.validator.ws.exception.ValidatorDocumentException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,24 +20,17 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CNPJServiceImpl implements CNPJService {
 
-    private Message mensagem;
-    private CNPJValidator cnpjValidator;
-    private CNPJRepository cnpjRepository;
-    private StringToCNPJConverter cnpjConverter;
+    private final Message mensagem;
+    private final CNPJValidator cnpjValidator;
+    private final CNPJRepository cnpjRepository;
+    private final StringToCNPJConverter cnpjConverter;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    public CNPJServiceImpl(Message mensagem, CNPJValidator cnpjValidator, CNPJRepository cnpjRepository, StringToCNPJConverter cnpjConverter) {
-        this.mensagem = mensagem;
-        this.cnpjValidator = cnpjValidator;
-        this.cnpjRepository = cnpjRepository;
-        this.cnpjConverter = cnpjConverter;
-    }
-
     @Override
-    public String validateCNPJ(String numeroCNPJ) {
+    public String validarCNPJ(String numeroCNPJ) {
         if (ObjectUtils.isEmpty(numeroCNPJ)) {
             String mensagemErroI18n = mensagem.getMessage(MessageHelper.CNPJ_VAZIO,numeroCNPJ);
             logger.error(mensagem.getMessage(MessageHelper.CNPJ_VALIDAR_ERRO,mensagemErroI18n));
@@ -52,7 +46,7 @@ public class CNPJServiceImpl implements CNPJService {
     }
 
     @Override
-    public CNPJ saveCNPJ(String numeroCNPJ) {
+    public CNPJ cadastrarCNPJ(String numeroCNPJ) {
         numeroCNPJ = numeroCNPJ.replaceAll("[^0-9]", "");
         if (!cnpjValidator.validarCNPJ(numeroCNPJ)) {
             String mensagemErroI18n = mensagem.getMessage(MessageHelper.CNPJ_INVALIDO,numeroCNPJ);
@@ -69,11 +63,11 @@ public class CNPJServiceImpl implements CNPJService {
     }
 
     @Override
-    public List<CNPJ> getAllCNPJ() {
+    public List<CNPJ> listarCNPJs() {
         return cnpjRepository.findAll();
     }
 
-    private Boolean verificaSeCNPJPossuiCadastro(String numeroCNPJ){
+    public Boolean verificaSeCNPJPossuiCadastro(String numeroCNPJ){
         CNPJ cnpjCadastrado = cnpjRepository.findCNPJByNumero(numeroCNPJ);
         return ObjectUtils.isEmpty(cnpjCadastrado) ;
     }

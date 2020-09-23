@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface CNPJService {
 
-    String validateCNPJ(String numeroCNPJ);
-    CNPJ saveCNPJ(String numeroCNPJ);
-    List<CNPJ> getAllCNPJ();
+    String validarCNPJ(String numeroCNPJ);
+
+    CNPJ cadastrarCNPJ(String numeroCNPJ);
+
+    List<CNPJ> listarCNPJs();
 
 }

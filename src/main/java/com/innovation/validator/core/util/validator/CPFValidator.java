@@ -13,17 +13,17 @@ public class CPFValidator {
             .asList("00000000000", "11111111111", "22222222222", "33333333333", "44444444444",
                     "55555555555", "66666666666", "77777777777", "88888888888", "99999999999");
 
-    public Boolean validateCPF(String cpf) {
-        String cpfLimpo = removeLettersAndSpecialCharactersFromDocument(cpf);
+    public Boolean validarCPF(String cpf) {
+        String cpfLimpo = removeCaracteresDoCPF(cpf);
         if ((cpfLimpo.length() != 11) || cpfFalhos.contains(cpfLimpo)) {
             return false;
         }
-        Integer digito1 = calculateCPFDigit(cpfLimpo.substring(0, 9), pesoCPF);
-        Integer digito2 = calculateCPFDigit(cpfLimpo.substring(0, 9) + digito1, pesoCPF);
+        Integer digito1 = calculaDigitoCPF(cpfLimpo.substring(0, 9), pesoCPF);
+        Integer digito2 = calculaDigitoCPF(cpfLimpo.substring(0, 9) + digito1, pesoCPF);
         return cpfLimpo.equals(cpfLimpo.substring(0, 9) + digito1.toString() + digito2.toString());
     }
 
-    private Integer calculateCPFDigit(String cpf, int[] peso) {
+    public Integer calculaDigitoCPF(String cpf, int[] peso) {
         int somaValorCPF = 0;
         for (int indice = cpf.length() - 1; indice >= 0; indice--) {
             int digito = Integer.parseInt(cpf.substring(indice, indice + 1));
@@ -33,7 +33,7 @@ public class CPFValidator {
         return somaValorCPF > 9 ? 0 : somaValorCPF;
     }
 
-    private String removeLettersAndSpecialCharactersFromDocument(String document) {
+    public String removeCaracteresDoCPF(String document) {
         return document.replaceAll("[^0-9]", "");
     }
 }

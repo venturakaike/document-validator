@@ -4,10 +4,13 @@ import com.innovation.validator.core.model.mongo.CPF;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CPFRepository extends MongoRepository<CPF, String> {
+import java.util.UUID;
 
-    CPF findCPFById();
+@Repository
+public interface CPFRepository extends MongoRepository<CPF, UUID> {
+
+    CPF findCPFById(UUID id);
+
     CPF findCPFByNumero(String numeroCPF);
 
 }

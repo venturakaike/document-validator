@@ -6,9 +6,10 @@ import java.util.List;
 
 public interface CPFService {
 
-    String validateCPF(String numeroCPF);
-    CPF saveCPF(String numeroCPF);
-    List<CPF> getAllCPFs();
-    List<CPF> createValidDocuments();
+    String validarCPF(String numeroCPF);
+
+    CPF cadastrarCPF(String numeroCPF);
+
+    List<CPF> listarCPFs();
 
 }
